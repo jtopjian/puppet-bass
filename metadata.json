@@ -1,0 +1,23 @@
+{
+  "name": "jtopjian-bass",
+  "version": "0.1.0",
+  "author": "Joe Topjian",
+  "license": "Apache-2.0",
+  "summary": "Various helper manifests for base system configuration",
+  "source": "https://github.com/jtopjian/puppet-bass",
+  "project_page": "https://github.com/jtopjian/puppet-bass",
+  "issues_url": "https://github.com/jtopjian/puppet-bass/issues",
+  "tags": ["base", "users", "packages", "firewall"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "12.04", "10.04" ]
+    }
+   ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">=3.2.0" },
+    { "name": "puppetlabs/firewall", "version_requirement": ">=1.3.0" },
+    { "name": "jtopjian/sshkeys", "version_requirement": ">=1.9.0" },
+    { "name": "duritong/sysctl", "version_requirements": ">=0.0.6" },
+  ]
+}
