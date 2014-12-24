@@ -22,6 +22,14 @@ site::firewall::trusted::ipv4:
 site::firewall::trusted::ipv6:
   - '2605:fd00:4:1000::/64'
 
+## Hosts
+site::hosts::ip: "%{::ipaddress6_eth0}"
+site::hosts::global: false
+site::hosts::static_hosts:
+  www.example.com:
+    ip: '192.168.255.10'
+    host_aliases: ['www', 'www2.example.com', 'www2']
+
 ## Packages
 
 site::packages:
@@ -61,6 +69,9 @@ class site::profiles::base {
 
   # Hiera
   $users                         = hiera_hash('site::users', {})
+  $hosts_ip                      = hiera('site::hosts::ip', $::ipaddress_eth0)
+  $hosts_global                  = hiera('site::hosts::global', false)
+  $hosts_static_hosts            = hiera('site::hosts::static_hosts', {})
   $packages                      = hiera_hash('site::packages', {})
   $packages_gems                 = hiera_hash('site::packages::gems', {})
   $packages_eggs                 = hiera_hash('site::packages::eggs', {})
@@ -78,6 +89,11 @@ class site::profiles::base {
   anchor { 'site::profiles::base::begin': } ->
   class { 'bass::users':
     users => $users,
+  } ->
+  class { 'bass::hosts':
+    ip           => $hosts_ip,
+    is_global    => $hosts_global,
+    static_hosts => $hosts_static_hosts,
   } ->
   class { 'bass::packages':
     packages => $packages,
