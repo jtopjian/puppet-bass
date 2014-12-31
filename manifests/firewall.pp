@@ -71,11 +71,6 @@ class bass::firewall (
 
   include bass::params
 
-  # Ensure all packages are installed:
-  package { $bass::params::iptables_packages:
-    ensure => latest,
-  }
-
   # Purge rules if configured to do so
   if $purge == true {
     resources { 'firewall':
