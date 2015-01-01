@@ -70,6 +70,7 @@ class bass::firewall (
 ) {
 
   include bass::params
+  include firewall
 
   # Purge rules if configured to do so
   if $purge == true {
