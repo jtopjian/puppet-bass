@@ -83,7 +83,8 @@ class bass::users (
         # add that key to ~/.ssh/authorized_keys
         if has_key($user_info, 'ssh_authorized_keys') and is_hash($user_info['ssh_authorized_keys']) {
           $user_info['ssh_authorized_keys'].each |$ssh_key_name, $ssh_key_info| {
-            ensure_resource(ssh_authorized_keys, "${user}: ${ssh_key_name}", $ssh_key_info)
+            $merged_ssh_key_info = merge($ssh_key_info, { 'user' => $user })
+            ensure_resource(ssh_authorized_key, "${user}_${ssh_key_name}", $merged_ssh_key_info)
           }
         }
 
