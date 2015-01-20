@@ -82,7 +82,7 @@ class site::profiles::base {
   $firewall_trusted_ipv6         = hiera_array('site::firewall::trusted::ipv6', [])
   $firewall_untrusted_ipv4       = hiera_array('site::firewall::untrusted::ipv4', [])
   $firewall_untrusted_ipv6       = hiera_array('site::firewall::untrusted::ipv6', [])
-  $firewall_rules:               = hiera_hash('site::firewall::rules', {})
+  $firewall_rules                = hiera_hash('site::firewall::rules', {})
   $sysctl_ip_local_reserve_ports = hiera_array('site::network::local_reserve_ports', [])
   $sysctl_settings               = hiera_hash('site::sysctl::settings', {})
 
