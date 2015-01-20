@@ -130,9 +130,7 @@ class bass::firewall (
   }
 
   # Apply given rules
-  $rules.each |$rule_title, $rule| {
-    create_resources(firewall, $rule_title, $rule)
-  }
+  create_resources(firewall, $rules)
 
   # Set a default policy
   firewall { '999 default policy for ipv4':
