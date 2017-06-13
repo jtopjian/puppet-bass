@@ -129,6 +129,12 @@ define bass::user (
         if has_key($ssh_keys, $key_name) {
           $key = $ssh_keys[$key_name]
           ssh_authorized_key { "${name}_${key['key']}":
+            ensure => absent,
+            user   => $name,
+            type   => $key['type'],
+            key    => $key['key'],
+          }
+          ssh_authorized_key { "${name}_${key_name}":
             user => $name,
             type => $key['type'],
             key  => $key['key'],
