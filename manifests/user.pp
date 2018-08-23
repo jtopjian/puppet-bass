@@ -44,6 +44,10 @@
 #   A list of stored public keys that will be placed in the `authorized_users` file.
 #   These keys must be defined in hiera.
 #
+# [*ssh_unauthorized_keys*]
+#   A list of stored public keys that must not be in the `authorized_users` file.
+#   These keys must be defined in hiera.
+#
 # [*ssh_authorized_users*]
 #   A list of authorized users managed by the `jtopjian/sshkeys` module.
 #
@@ -86,6 +90,7 @@ define bass::user (
   $create_ssh_key       = false,
   $ssh_authorized_keys  = [],
   $ssh_authorized_users = [],
+  $ssh_unauthorized_keys  = [],
 ) {
 
   group { $name:
@@ -141,6 +146,18 @@ define bass::user (
           }
         }
       }
+
+      $ssh_unauthorized_keys.each |$key_name| {
+        if has_key($ssh_keys, $key_name) {
+          $key = $ssh_keys[$key_name]
+          ssh_authorized_key { "${name}_${key_name}":
+            ensure => absent,
+            user => $name,
+            type => $key['type'],
+            key  => $key['key'],
+          }
+        }
+      }
     }
 
     $ssh_authorized_users.each |$remote_user| {
@@ -149,6 +166,7 @@ define bass::user (
         remote_user => $remote_user,
       }
     }
+
   }
 
   if $sudo {
