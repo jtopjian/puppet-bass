@@ -111,6 +111,7 @@ define bass::user (
     groups     => $groups,
     managehome => $managehome,
     home       => $home_real,
+    shell      => $shell,
     require    => Group[$name],
   }
 
